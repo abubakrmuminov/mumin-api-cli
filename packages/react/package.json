@@ -1,16 +1,19 @@
 {
-  "name": "@mumin/react",
-  "version": "1.0.0",
+  "name": "@mumin-api/react",
+  "version": "2.0.1",
   "description": "React hooks for Mumin Hadith API",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist"
@@ -25,7 +28,7 @@
     "react": "^18.0.0"
   },
   "dependencies": {
-    "@mumin/core": "*"
+    "@mumin-api/core": "*"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
