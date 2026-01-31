@@ -1,0 +1,36 @@
+{
+  "name": "@mumin/vue",
+  "version": "1.0.0",
+  "description": "Vue 3 composables for Mumin Hadith API",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --external vue",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --external vue --watch",
+    "test": "vitest run",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "dependencies": {
+    "@mumin/core": "*"
+  },
+  "devDependencies": {
+    "vue": "^3.4.0",
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.1",
+    "vue-tsc": "^1.8.27"
+  }
+}
