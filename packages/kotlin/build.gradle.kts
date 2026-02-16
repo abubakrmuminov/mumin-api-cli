@@ -4,7 +4,7 @@ plugins {
     id("com.android.library") version "8.2.2"
     `maven-publish`
     signing
-    id("net.thebugmc.gradle.sonatype-central-portal-publisher") version "1.2.4"
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 group = "ink.mumin"
@@ -16,12 +16,11 @@ repositories {
 }
 
 kotlin {
-    jvmToolchain(17)
-    
-    jvm()
     androidTarget {
         publishLibraryVariants("release")
     }
+    jvm()
+    jvmToolchain(17)
     
     // iOS Targets
     iosX64()
@@ -84,53 +83,32 @@ android {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["kotlin"])
-            
-            groupId = "ink.mumin"
-            artifactId = "sdk"
-            version = "1.0.0"
+mavenPublishing {
+    publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+    coordinates("ink.mumin", "sdk", "1.0.0")
 
-            pom {
-                name.set("Mumin Kotlin SDK")
-                description.set("Official Kotlin Multiplatform SDK for the Mumin Hadith API")
-                url.set("https://github.com/mumin-ink/mumin-api")
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("mumin")
-                        name.set("Mumin Team")
-                        email.set("admin@mumin.ink")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:github.com/mumin-ink/mumin-api.git")
-                    developerConnection.set("scm:git:ssh://github.com/mumin-ink/mumin-api.git")
-                    url.set("https://github.com/mumin-ink/mumin-api")
-                }
+    pom {
+        name.set("Mumin Kotlin SDK")
+        description.set("Official Kotlin Multiplatform SDK for the Mumin Hadith API")
+        url.set("https://github.com/mumin-ink/mumin-api")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
             }
         }
-    }
-}
-
-centralPortalPublishing {
-    username.set(System.getenv("MAVEN_USERNAME"))
-    password.set(System.getenv("MAVEN_PASSWORD"))
-    publishingType.set("AUTOMATIC") // Or "USER_MANAGED" if you want to manual publish in UI
-}
-
-signing {
-    val signingKey = System.getenv("GPG_SIGNING_KEY")
-    val signingPassword = System.getenv("GPG_SIGNING_PASSWORD")
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-        sign(publishing.publications["maven"])
+        developers {
+            developer {
+                id.set("mumin")
+                name.set("Mumin Team")
+                email.set("admin@mumin.ink")
+            }
+        }
+        scm {
+            connection.set("scm:git:github.com/mumin-ink/mumin-api.git")
+            developerConnection.set("scm:git:ssh://github.com/mumin-ink/mumin-api.git")
+            url.set("https://github.com/mumin-ink/mumin-api")
+        }
     }
 }

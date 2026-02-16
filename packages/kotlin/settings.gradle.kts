@@ -8,5 +8,4 @@ pluginManagement {
 
 
 
-rootProject.name = "sdk"
-include(":")
+rootProject.name = "mumin-sdk"
