@@ -4,6 +4,7 @@ plugins {
     id("com.android.library") version "8.2.2"
     `maven-publish`
     signing
+    id("net.thebugmc.gradle.sonatype-central-portal-publisher") version "1.2.4"
 }
 
 group = "ink.mumin"
@@ -117,17 +118,12 @@ publishing {
             }
         }
     }
-    
-    repositories {
-        maven {
-            name = "central"
-            url = uri("https://central.sonatype.com/api/v1/publisher/deployments/maven")
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-    }
+}
+
+centralPortalPublishing {
+    username.set(System.getenv("MAVEN_USERNAME"))
+    password.set(System.getenv("MAVEN_PASSWORD"))
+    publishingType.set("AUTOMATIC") // Or "USER_MANAGED" if you want to manual publish in UI
 }
 
 signing {
