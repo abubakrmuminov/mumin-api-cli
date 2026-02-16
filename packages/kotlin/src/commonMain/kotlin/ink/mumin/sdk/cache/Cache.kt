@@ -32,12 +32,16 @@ class MemoryCache : CacheAdapter {
         entry.value as? T
     }
 
-    override suspend fun <T : Any> set(key: String, value: T, ttl: Duration) = mutex.withLock {
-        storage[key] = CacheEntry(value, Clock.System.now() + ttl)
+    override suspend fun <T : Any> set(key: String, value: T, ttl: Duration) {
+        mutex.withLock {
+            storage[key] = CacheEntry(value, Clock.System.now() + ttl)
+        }
     }
 
-    override suspend fun delete(key: String) = mutex.withLock {
-        storage.remove(key)
+    override suspend fun delete(key: String) {
+        mutex.withLock {
+            storage.remove(key)
+        }
     }
 
     override suspend fun clear() = mutex.withLock {
