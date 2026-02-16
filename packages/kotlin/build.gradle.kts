@@ -112,3 +112,13 @@ mavenPublishing {
         }
     }
 }
+
+signing {
+    val keyId = System.getenv("GPG_KEY_ID")
+    val password = System.getenv("GPG_SIGNING_PASSWORD")
+    val secretKey = System.getenv("GPG_SIGNING_KEY")
+
+    if (secretKey != null && password != null && keyId != null) {
+        useInMemoryPgpKeys(keyId, secretKey, password)
+    }
+}
