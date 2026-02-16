@@ -9,6 +9,11 @@ plugins {
 group = "ink.mumin"
 version = "1.0.0"
 
+repositories {
+    google()
+    mavenCentral()
+}
+
 kotlin {
     jvm()
     androidTarget {
